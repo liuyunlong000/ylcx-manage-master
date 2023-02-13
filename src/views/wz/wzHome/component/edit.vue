@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="100px" @submit.prevent>
-            <el-dialog :title="dialogTitle" v-model="isShowDialog" width="800px" draggable>
+            <el-dialog :title="dialogTitle" v-model="isShowDialog" width="1200px" draggable>
                 <el-row :gutter="35">
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                     <el-form-item prop="title" label="标题">
@@ -9,8 +9,16 @@
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                    <el-form-item prop="imgUrl" label="图片路径">
-                      <el-input v-model.trim="ruleForm.imgUrl" placeholder="请输入图片路径"/>
+                    <el-form-item prop="imgUrl" label="图片">
+                      <el-upload
+                          name="upfile"
+                          class="avatar-uploader"
+                          :action="apiUrl+'/ueditor/exec?action=uploadimage'"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess">
+                        <img v-if="ruleForm.imgUrl" :src="ruleForm.imgUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -51,6 +59,7 @@
     const state = reactive({
         isShowDialog: false,//是否显示对话框
         dialogTitle: "",//面板标题
+        apiUrl:import.meta.env.VITE_API_URL,
         ruleForm: {
             nid:null,
             title:null,
@@ -58,7 +67,7 @@
             sortNum:null
         }
     });
-    const {isShowDialog, dialogTitle, ruleForm} = toRefs(state);
+    const {isShowDialog, dialogTitle,ruleForm,apiUrl} = toRefs(state);
 
     /**表单验证规则**/
     const rules = reactive({
@@ -117,7 +126,40 @@
             }
         });
     };
+    const handleAvatarSuccess = (res:any,file:any) =>{
+        if (res.state === 'SUCCESS') {
+            state.ruleForm.imgUrl = state.apiUrl+"/ueditor/image/"+res.url;
+        }
+    }
+    const handleRemove = (file:any, fileList:any) => {
+        state.ruleForm.imgUrl = null;
+    }
 
     /**暴露属性，供父组件调用**/
     defineExpose({openDialog});
 </script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

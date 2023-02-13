@@ -38,7 +38,16 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="title" label="标题" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-                <el-table-column prop="imgUrl" label="图片路径" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+                <el-table-column label="图片" width="auto" align="center">
+                  <template #default="scope">
+                    <el-image
+                        :src="scope.row.imgUrl"
+                        :preview-src-list="[scope.row.imgUrl]"
+                        style="height: 23px"
+                        z-index="9999">
+                    </el-image>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="sortNum" label="排序" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
@@ -81,6 +90,7 @@
     import {IWzHome} from "/@/views/wz/wzHome/interface/IWzHome";
     import WzHomeEdit from "/@/views/wz/wzHome/component/edit.vue";
     import {find_list_by_page, delete_id} from "/@/api/wz/wzHome";
+    import Image from "../../../../public/UEditor/dialogs/image/image.html";
 
     type FormInstance = InstanceType<typeof ElForm>;
     const editRef = ref();
@@ -175,3 +185,8 @@
         fetchData();
     });
 </script>
+<style>
+.el-table .el-table__cell{
+  position: static!important;
+}
+</style>

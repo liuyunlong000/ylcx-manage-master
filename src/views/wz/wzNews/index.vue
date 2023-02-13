@@ -38,12 +38,21 @@
                     </template>
                 </el-table-column>
               <el-table-column prop="title" label="标题" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-              <el-table-column prop="photo" label="图片路径" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column label="图片" width="auto" align="center">
+                <template #default="scope">
+                  <el-image
+                      :src="scope.row.photo"
+                      :preview-src-list="[scope.row.photo]"
+                      style="height: 23px"
+                      z-index="9999">
+                  </el-image>
+                </template>
+              </el-table-column>
               <el-table-column prop="resume" label="简介" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-              <el-table-column prop="content" label="新闻内容" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="releaseTime" label="发布时间" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="source" label="文章来源" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="home" label="是否轮播" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column prop="top" label="置顶" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
                         <el-button :text="true" class="btnPd0" @click="openEditDialog(scope.row)">
@@ -179,3 +188,8 @@
         fetchData();
     });
 </script>
+<style>
+.el-table .el-table__cell{
+  position: static!important;
+}
+</style>

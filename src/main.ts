@@ -20,7 +20,7 @@ import BaiduMap from 'vue-baidu-map-3x';
 //全局引入Vant组件
 import Vant from 'vant';
 import 'vant/lib/index.css';
-
+import VueUeditorWrap from 'vue-ueditor-wrap';
 const app = createApp(App);
 //注册自定义指令
 directive(app);
@@ -56,4 +56,5 @@ app.use(BaiduMap, {
     // type: 'WebGL' // ||API 默认API  (使用此模式 BMap=BMapGL)
 });
 app.use(Vant);
+app.use(VueUeditorWrap);
 app.mount("#app");

@@ -9,8 +9,16 @@
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                    <el-form-item prop="photo" label="图片路径">
-                      <el-input v-model.trim="ruleForm.photo" placeholder="请输入图片路径"/>
+                    <el-form-item prop="photo" label="图片">
+                      <el-upload
+                          name="upfile"
+                          class="avatar-uploader"
+                          :action="apiUrl+'/ueditor/exec?action=uploadimage'"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess">
+                        <img v-if="ruleForm.photo" :src="ruleForm.photo" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -25,10 +33,24 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                     <el-form-item prop="home" label="是否轮播">
-                      <el-select v-model.trim="ruleForm.home">
-                        <el-option label="是" value="是"></el-option>
-                        <el-option label="否" value="否"></el-option>
-                      </el-select>
+                      <el-switch
+                          v-model="ruleForm.home"
+                          active-color="#13ce66"
+                          inactive-color="#7a7a7a"
+                          active-value="是"
+                          inactive-value="">
+                      </el-switch>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                    <el-form-item prop="source" label="置顶">
+                      <el-switch
+                          v-model="ruleForm.top"
+                          active-color="#13ce66"
+                          inactive-color="#7a7a7a"
+                          active-value="是"
+                          inactive-value="">
+                      </el-switch>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -38,7 +60,7 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                     <el-form-item prop="content" label="新闻内容">
-                      <el-input :rows="13" type="textarea" v-model.trim="ruleForm.content" placeholder="请输入新闻内容"/>
+                      <vue-ueditor-wrap v-model="ruleForm.content" :config="editorConfig"></vue-ueditor-wrap>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -74,6 +96,13 @@
     const state = reactive({
         isShowDialog: false,//是否显示对话框
         dialogTitle: "",//面板标题
+        apiUrl:import.meta.env.VITE_API_URL,
+        editorConfig:{
+            UEDITOR_HOME_URL : '/UEditor/',
+            serverUrl: import.meta.env.VITE_API_URL+"/ueditor/exec",
+            initialFrameWidth: '100%',
+            initialFrameHeight: 380
+        },
         ruleForm: {
             nid:null,
             title:null,
@@ -82,10 +111,11 @@
             content:null,
             releaseTime:null,
             source:null,
-            home:null
+            home:null,
+            top:null
         }
     });
-    const {isShowDialog, dialogTitle, ruleForm} = toRefs(state);
+    const {isShowDialog, dialogTitle, editorConfig,ruleForm,apiUrl} = toRefs(state);
 
     /**表单验证规则**/
     const rules = reactive({
@@ -101,6 +131,7 @@
         state.ruleForm.releaseTime=null;
         state.ruleForm.source=null;
         state.ruleForm.home=null;
+        state.ruleForm.top=null;
     };
     
 
@@ -148,7 +179,40 @@
             }
         });
     };
+    const handleAvatarSuccess = (res:any,file:any) =>{
+        if (res.state === 'SUCCESS') {
+            state.ruleForm.photo = state.apiUrl+"/ueditor/image/"+res.url;
+        }
+    }
+    const handleRemove = (file:any, fileList:any) => {
+        state.ruleForm.photo = null;
+    }
 
     /**暴露属性，供父组件调用**/
     defineExpose({openDialog});
 </script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

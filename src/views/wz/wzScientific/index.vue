@@ -38,7 +38,6 @@
                     </template>
                 </el-table-column>
               <el-table-column prop="name" label="名称" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-              <el-table-column prop="content" label="内容" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="sortNum" label="排序" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
@@ -175,3 +174,8 @@
         fetchData();
     });
 </script>
+<style>
+.el-table .el-table__cell{
+  position: static!important;
+}
+</style>

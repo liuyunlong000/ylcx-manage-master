@@ -39,9 +39,17 @@
                 </el-table-column>
               <el-table-column prop="name" label="姓名" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="post" label="职务" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-              <el-table-column prop="photo" label="图片路径" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column label="图片" width="auto" align="center">
+                <template #default="scope">
+                  <el-image
+                      :src="scope.row.photo"
+                      :preview-src-list="[scope.row.photo]"
+                      style="height: 23px"
+                      z-index="9999">
+                  </el-image>
+                </template>
+              </el-table-column>
               <el-table-column prop="resume" label="简介" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
-              <el-table-column prop="content" label="内容" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
               <el-table-column prop="sortNum" label="排序" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
@@ -178,3 +186,8 @@
         fetchData();
     });
 </script>
+<style>
+.el-table .el-table__cell{
+  position: static!important;
+}
+</style>

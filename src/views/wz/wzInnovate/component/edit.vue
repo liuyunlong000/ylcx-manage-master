@@ -15,7 +15,7 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                     <el-form-item prop="content" label="内容">
-                      <el-input :rows="25" type="textarea" v-model.trim="ruleForm.content" placeholder="请输入内容"/>
+                      <vue-ueditor-wrap v-model="ruleForm.content" :config="editorConfig"></vue-ueditor-wrap>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -51,6 +51,12 @@
     const state = reactive({
         isShowDialog: false,//是否显示对话框
         dialogTitle: "",//面板标题
+        editorConfig:{
+            UEDITOR_HOME_URL : '/UEditor/',
+            serverUrl: import.meta.env.VITE_API_URL+"/ueditor/exec",
+            initialFrameWidth: '100%',
+            initialFrameHeight: 380
+        },
         ruleForm: {
             nid:null,
             name:null,
@@ -58,7 +64,7 @@
             sortNum:null
         }
     });
-    const {isShowDialog, dialogTitle, ruleForm} = toRefs(state);
+    const {isShowDialog, dialogTitle, editorConfig,ruleForm} = toRefs(state);
 
     /**表单验证规则**/
     const rules = reactive({
