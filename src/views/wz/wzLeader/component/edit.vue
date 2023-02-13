@@ -78,6 +78,7 @@
         editorConfig:{
             UEDITOR_HOME_URL : '/UEditor/',
             serverUrl: import.meta.env.VITE_API_URL+"/ueditor/exec",
+            urlPrefix: import.meta.env.VITE_API_URL,
             initialFrameWidth: '100%',
             initialFrameHeight: 380
         },

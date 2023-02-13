@@ -8099,6 +8099,14 @@ UE.Editor.defaultOptions = function(editor){
                     'onsuccess':function(r){
                         try {
                             var config = isJsonp ? r:eval("("+r.responseText+")");
+                            config.imageUrlPrefix = me.options.urlPrefix+config.imageUrlPrefix;
+                            config.scrawlUrlPrefix = me.options.urlPrefix+config.scrawlUrlPrefix;
+                            config.snapscreenUrlPrefix = me.options.urlPrefix+config.snapscreenUrlPrefix;
+                            config.catcherUrlPrefix = me.options.urlPrefix+config.catcherUrlPrefix;
+                            config.videoUrlPrefix = me.options.urlPrefix+config.videoUrlPrefix;
+                            config.fileUrlPrefix = me.options.urlPrefix+config.fileUrlPrefix;
+                            config.imageManagerUrlPrefix = me.options.urlPrefix+config.imageManagerUrlPrefix;
+                            config.fileManagerUrlPrefix = me.options.urlPrefix+config.fileManagerUrlPrefix;
                             utils.extend(me.options, config);
                             me.fireEvent('serverConfigLoaded');
                             me._serverConfigLoaded = true;
