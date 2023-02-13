@@ -6,6 +6,7 @@
       </div>
       <ul class="nav">
         <li
+            :id="item.value"
             v-for="item in navList"
             :key="item.value"
             :class="item.value == activeIndex ? 'active' : ''"
@@ -82,9 +83,63 @@
             }
         },
         mounted() {
-            /*const active = Cookies.get("active");
-    this.activeIndex = active ? active : "index";
-    this.$router.push("/" + this.activeIndex);*/
+            const route=this.$route;
+            if(route.path=='/home/swapper' || route.path=='/home/scientificDynamic' || route.path=='/home/friendlyLinks'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('index').className='active';
+                this.activeIndex='index';
+            }
+            if(route.path=='/survey/company'|| route.path=='/survey/org' || route.path=='/survey/leader'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('survey').className='active';
+                this.activeIndex='survey';
+            }
+            if(route.path=='/news/newscore'|| route.path=='/news/notice'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('news').className='active';
+                this.activeIndex='news';
+            }
+            if(route.path=='/scientific'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('scientific').className='active';
+                this.activeIndex='scientific';
+            }
+            if(route.path=='/innovate'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('innovate').className='active';
+                this.activeIndex='innovate';
+            }
+            if(route.path=='/innovatePlatform'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('innovatePlatform').className='active';
+                this.activeIndex='innovatePlatform';
+            }
+            if(route.path=='/product'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('product').className='active';
+                this.activeIndex='product';
+            }
+            if(route.path=='/talent/talent'|| route.path=='/talent/recruit' || route.path=='/talent/dynamic'){
+                if(this.activeIndex){
+                    document.getElementById(this.activeIndex).className='';
+                }
+                document.getElementById('talent').className='active';
+                this.activeIndex='talent';
+            }
 
         },
         beforeUnmount() {},

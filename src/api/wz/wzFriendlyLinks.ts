@@ -7,7 +7,7 @@ import request from '/@/utils/request';
  */
 export function save_id(data:any) {
     return request({
-        url: '/wzCompanyOrg/save',
+        url: '/wzFriendlyLinks/save',
         method: 'post',
         data,
     });
@@ -20,7 +20,7 @@ export function save_id(data:any) {
  */
 export function update_id(data:any) {
     return request({
-        url: '/wzCompanyOrg/update',
+        url: '/wzFriendlyLinks/update',
         method: 'put',
         data,
     });
@@ -33,7 +33,7 @@ export function update_id(data:any) {
  */
 export function delete_id(data:any) {
     return request({
-        url: '/wzCompanyOrg/delete',
+        url: '/wzFriendlyLinks/delete',
         method: 'delete',
         params: data,
     });
@@ -46,7 +46,7 @@ export function delete_id(data:any) {
  */
 export function batDelete(data:any) {
     return request({
-        url: '/wzCompanyOrg/bat_delete',
+        url: '/wzFriendlyLinks/bat_delete',
         method: 'delete',
         data,
     });
@@ -59,7 +59,7 @@ export function batDelete(data:any) {
  */
 export function find_id(data:any) {
     return request({
-        url: '/wzCompanyOrg/find_id',
+        url: '/wzFriendlyLinks/find_id',
         method: 'get',
         params: data,
     });
@@ -72,7 +72,7 @@ export function find_id(data:any) {
  */
 export function find_list(data:any) {
     return request({
-        url: '/wzCompanyOrg/find_list',
+        url: '/wzFriendlyLinks/find_list',
         method: 'post',
         data,
     });
@@ -85,7 +85,7 @@ export function find_list(data:any) {
  */
 export function find_list_by_page(data:any) {
     return request({
-        url: '/wzCompanyOrg/find_list_by_page',
+        url: '/wzFriendlyLinks/find_list_by_page',
         method: 'post',
         data,
     });
@@ -98,7 +98,7 @@ export function find_list_by_page(data:any) {
  */
 export function disable_id(data:any) {
     return request({
-        url: '/wzCompanyOrg/disable',
+        url: '/wzFriendlyLinks/disable',
         method: 'get',
         params: data
     });

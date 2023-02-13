@@ -23,6 +23,7 @@
                 subnavList: [
                     { name: "轮播图", link: "swapper" },
                     { name: "科研动态", link: "scientificDynamic" },
+                    { name: "友情链接", link: "friendlyLinks" },
                 ],
                 crumbsList: [
                 ],

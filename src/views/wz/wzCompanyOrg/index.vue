@@ -13,10 +13,6 @@
                             <SvgIcon name="ele-Refresh"/>
                             重置
                         </el-button>
-                        <el-button type="primary" plain @click="openEditDialog">
-                            <SvgIcon name="ele-Plus"/>
-                            新增
-                        </el-button>
                     </el-form-item>
         </el-col>
 			</el-row>
@@ -34,15 +30,12 @@
                         {{ $index + 1 }}
                     </template>
                 </el-table-column>
+              <el-table-column prop="title" label="标题" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
                         <el-button :text="true" class="btnPd0" @click="openEditDialog(scope.row)">
                             <SvgIcon name="ele-Edit"/>
                             修改
-                        </el-button>
-                        <el-button :text="true" class="btnPd0" @click="handleDelete(scope.row)">
-                            <SvgIcon name="ele-Delete"/>
-                            删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -72,8 +65,8 @@
 <script setup lang="ts">
     import {ref, toRefs, reactive, onMounted, getCurrentInstance} from "vue";
     import type {ElForm} from "element-plus";
-    import {IWzComplanyOrg} from "/@/views/wz/wzComplanyOrg/interface/IWzComplanyOrg";
-    import WzComplanyOrgEdit from "/@/views/wz/wzComplanyOrg/component/edit.vue";
+    import {IWzComplanyOrg} from "/@/views/wz/wzCompanyOrg/interface/IWzComplanyOrg";
+    import WzComplanyOrgEdit from "/@/views/wz/wzCompanyOrg/component/edit.vue";
     import {find_list_by_page, delete_id} from "/@/api/wz/wzComplanyOrg";
 
     type FormInstance = InstanceType<typeof ElForm>;

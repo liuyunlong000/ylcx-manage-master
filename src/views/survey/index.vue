@@ -21,6 +21,8 @@
         data() {
             return {
                 subnavList: [
+                    { name: "研究院概况", link: "company" },
+                    { name: "组织架构", link: "org" },
                     { name: "院领导", link: "leader" },
                 ],
                 crumbsList: [

@@ -24,7 +24,6 @@
 </template>
 
 <script>
-    import Cookies from "js-cookie";
     export default {
         name: "CommonContent",
         props: {
@@ -38,16 +37,14 @@
             }
         },
         data() {
+            const route=this.$route;
             let _index=0;
-            this.subnavList.forEach(
-                function (item,index){
-                    if(item.link==Cookies.get('link')){
-                        _index=index;
-                    }
+            for(let i=0;i<this.subnavList.length;i++){
+                if(this.subnavList[i].link==route.name){
+                    _index=i;
+                    break;
                 }
-            );
-            Cookies.set('active','')
-            Cookies.set('link','')
+            }
             return {
                 activeIndex: _index,
                 title:this.subnavList.length==0? "":this.subnavList[_index].name,

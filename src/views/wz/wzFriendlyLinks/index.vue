@@ -2,6 +2,9 @@
     <div>
         <el-card shadow="hover">
             <el-form ref="queryFormRef" :inline="true" :model="queryForm" label-width="100px" @submit.prevent>
+              <el-form-item prop="title" label="名称">
+                <el-input v-model="queryForm.name" placeholder="名称"/>
+              </el-form-item>
 			<el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
                     <el-form-item>
@@ -12,6 +15,10 @@
                         <el-button @click="resetQuery(queryFormRef)">
                             <SvgIcon name="ele-Refresh"/>
                             重置
+                        </el-button>
+                        <el-button type="primary" plain @click="openEditDialog">
+                            <SvgIcon name="ele-Plus"/>
+                            新增
                         </el-button>
                     </el-form-item>
         </el-col>
@@ -30,12 +37,23 @@
                         {{ $index + 1 }}
                     </template>
                 </el-table-column>
-              <el-table-column prop="title" label="标题" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column prop="name" label="名称" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column label="链接" width="auto" align="center">
+                <template #default="scope">
+                  <a :href="scope.row.content" target="_blank">{{scope.row.content}}</a>
+                </template>
+              </el-table-column>
+              <el-table-column prop="type" label="类型" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
+              <el-table-column prop="sortNum" label="排序" :sortable="false" :sort-orders="['ascending', 'descending']" width="auto" align="center" show-overflow-tooltip/>
                 <el-table-column label="操作" width="auto" align="center">
                     <template #default="scope">
                         <el-button :text="true" class="btnPd0" @click="openEditDialog(scope.row)">
                             <SvgIcon name="ele-Edit"/>
                             修改
+                        </el-button>
+                        <el-button :text="true" class="btnPd0" @click="handleDelete(scope.row)">
+                            <SvgIcon name="ele-Delete"/>
+                            删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -53,21 +71,21 @@
                 @current-change="handleCurrentChange"
                 @size-change="handleSizeChange"/>
         </el-card>
-        <WzBoardOverviewEdit ref="editRef" @fetch-data="fetchData"/>
+        <WzPersonnelOverviewEdit ref="editRef" @fetch-data="fetchData"/>
     </div>
 </template>
 <script lang="ts">
     export default {
-        name: "WzBoardOverviewIndex",
+        name: "WzPersonnelOverviewIndex",
         metaDataDict: []
     };
 </script>
 <script setup lang="ts">
     import {ref, toRefs, reactive, onMounted, getCurrentInstance} from "vue";
     import type {ElForm} from "element-plus";
-    import {IWzBoardOverview} from "/@/views/wz/wzBoardOverview/interface/IWzBoardOverview";
-    import WzBoardOverviewEdit from "/@/views/wz/wzBoardOverview/component/edit.vue";
-    import {find_list_by_page, delete_id} from "/@/api/wz/wzBoardOverview";
+    import WzPersonnelOverviewEdit from "/@/views/wz/wzFriendlyLinks/component/edit.vue";
+    import {find_list_by_page, delete_id} from "/@/api/wz/wzFriendlyLinks";
+    import {IWzFriendlyLinks} from "/@/views/wz/wzFriendlyLinks/interface/IWzFriendlyLinks";
 
     type FormInstance = InstanceType<typeof ElForm>;
     const editRef = ref();
@@ -87,15 +105,18 @@
     const {loading, tableData, layout, total} = toRefs(state);
     /**查询表单对象**/
     const queryForm = reactive({
+        name:undefined,
         pageNum: 1,//当前页码
         pageSize: 10,//每页大小
+        sortOrder:'asc',//排序方式
+        sortField:'sortNum',//排序属性
     });
     /** 打开编辑弹窗**/
-    const openEditDialog = (row: IWzBoardOverview) => {
+    const openEditDialog = (row: IWzFriendlyLinks) => {
         editRef.value.openDialog(row.nid);
     };
     /**删除当前行**/
-    const handleDelete = (row: IWzBoardOverview) => {
+    const handleDelete = (row: IWzFriendlyLinks) => {
         proxy.$baseConfirm(`此操作将永久删除：${row.nid}, 是否继续?`, "提示", async () => {
             delete_id({id: row.nid}).then((response: any) => {
                 if (response.code && response.code === 200) {

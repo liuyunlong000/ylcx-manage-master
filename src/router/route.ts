@@ -121,6 +121,14 @@ export const staticRoutes: Array<RouteRecordRaw> = [
                             title: '',
                             auth: false,
                         }
+                    },{
+                        path: "/home/friendlyLinks",
+                        name: 'friendlyLinks',
+                        component: () => import("/@/views/wz/wzFriendlyLinks/index.vue"),
+                        meta: {
+                            title: '',
+                            auth: false,
+                        }
                     }
                 ]
             },
@@ -168,7 +176,25 @@ export const staticRoutes: Array<RouteRecordRaw> = [
                 children:[
                     {
                         path: "/survey/",
-                        redirect: '/survey/leader'
+                        redirect: '/survey/company'
+                    },
+                    {
+                        path: "/survey/company",
+                        name: 'company',
+                        component: () => import("/@/views/wz/wzBoardOverview/index.vue"),
+                        meta: {
+                            title: '',
+                            auth: false,
+                        }
+                    },
+                    {
+                        path: "/survey/org",
+                        name: 'org',
+                        component: () => import("/@/views/wz/wzCompanyOrg/index.vue"),
+                        meta: {
+                            title: '',
+                            auth: false,
+                        }
                     },
                     {
                         path: "/survey/leader",

@@ -1,9 +1,19 @@
 <template>
     <div>
         <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="100px" @submit.prevent>
-            <el-dialog :title="dialogTitle" v-model="isShowDialog" width="800px" draggable>
-                <el-row :gutter="35">
-                </el-row>
+            <el-dialog :title="dialogTitle" v-model="isShowDialog" width="1200px" draggable>
+              <el-row :gutter="35">
+                <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                  <el-form-item prop="title" label="标题">
+                    <el-input v-model.trim="ruleForm.title" placeholder="请输入标题"/>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                  <el-form-item prop="content" label="内容">
+                    <vue-ueditor-wrap v-model="ruleForm.content" :config="editorConfig"></vue-ueditor-wrap>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 				<template #footer>
 					<span class="dialog-footer">
 						<el-button @click="onCancel">取 消</el-button>
@@ -36,11 +46,20 @@
     const state = reactive({
         isShowDialog: false,//是否显示对话框
         dialogTitle: "",//面板标题
+        editorConfig:{
+            UEDITOR_HOME_URL : '/UEditor/',
+            serverUrl: import.meta.env.VITE_API_URL+"/ueditor/exec",
+            urlPrefix: import.meta.env.VITE_API_URL,
+            initialFrameWidth: '100%',
+            initialFrameHeight: 380
+        },
         ruleForm: {
-            nid:null
+            nid:null,
+            title:null,
+            content:null,
         }
     });
-    const {isShowDialog, dialogTitle, ruleForm} = toRefs(state);
+    const {isShowDialog, dialogTitle, ruleForm,editorConfig} = toRefs(state);
 
     /**表单验证规则**/
     const rules = reactive({
